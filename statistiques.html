@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sortie.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Statistiques des Sorties</h1>
+    </header>
+
+    <main>
+        <!-- Section : Nombre de sorties par mois -->
+        <section>
+            <h2>Nombre de sorties par mois</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Mois</th>
+                        <th>Nombre de sorties</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat in sorties_par_mois %}
+                    <tr>
+                        <td>{{ stat.mois.strftime('%B %Y') }}</td>
+                        <!-- Affiche le mois et l'année -->
+                        <td>{{ stat.nombre_sorties }}</td>
+                        <!-- Affiche le nombre de sorties -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section : Nombre total de kilomètres parcourus -->
+        <section>
+            <h2>Total des kilomètres parcourus</h2>
+            <p><strong>{{ total_km or 0 }} km</strong></p>
+            <!-- Affiche le total des kilomètres -->
+        </section>
+
+        <!-- Ajoutez d'autres sections pour d'autres statistiques si nécessaire -->
+    </main>
+
+    <footer>
+        <a href="{{ url_for('espace_adherent') }}">Retour à l'espace adhérent</a>
+    </footer>
+</body>
+
+</html>

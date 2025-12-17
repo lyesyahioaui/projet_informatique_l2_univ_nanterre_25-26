@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Adhérent - Association Nature</title>
+
+    <style>
+        /* RESET & BASE */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #F3E5D8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* HEADER MODERNE */
+        header {
+            background: linear-gradient(
+                    rgba(46, 125, 50, 0.9),
+                    rgba(27, 94, 32, 0.9)
+                ),
+                url("sorties.jpg") no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 70px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* NAVIGATION BAR */
+        nav {
+            background-color: white;
+            padding: 15px 30px;
+            position: sticky;
+            top: 20px;
+            margin: -60px auto 20px;
+            max-width: 900px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #2E7D32;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #E8F5E9;
+            color: #1B5E20;
+            transform: translateY(-2px);
+        }
+
+        /* MAIN CONTAINER */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        section {
+            background: white;
+            padding: 30px 30px 35px;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        section:hover {
+            transform: translateY(-3px);
+        }
+
+        h2 {
+            color: #2E7D32;
+            font-size: 1.9rem;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #E8F5E9;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+
+        h3 {
+            color: #2E7D32;
+            margin-bottom: 10px;
+        }
+
+        /* TABLEAU HISTORIQUE */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            margin: 10px 0 0;
+        }
+
+        th {
+            background-color: #2E7D32;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            background-color: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .empty-message {
+            margin-top: 10px;
+            color: #777;
+        }
+
+        /* BOUTONS */
+        .btn-small {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #2E7D32;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-small:hover {
+            background-color: #1B5E20;
+            transform: scale(1.03);
+        }
+
+        /* CHATBOT (même styles que accueil) */
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 70vh;
+            border: 1px solid #e0e0e0;
+        }
+
+        .chat-header {
+            background-color: #2E7D32;
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bot-avatar {
+            width: 45px;
+            height: 45px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 2px solid #1B5E20;
+        }
+
+        .chat-header-info h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .chat-header-info p {
+            margin: 0;
+            font-size: 0.85rem;
+            opacity: 0.9;
+            color: #e8f5e9;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            background-color: #f5f7f5;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-image:
+                radial-gradient(#2E7D32 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+            background-color: #f0f7f0;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 1rem;
+            line-height: 1.4;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background-color: white;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background-color: #2E7D32;
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 2px 5px rgba(46, 125, 50, 0.2);
+        }
+
+        .timestamp {
+            font-size: 0.7rem;
+            margin-top: 5px;
+            display: block;
+            opacity: 0.7;
+            text-align: right;
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            background-color: white;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-form {
+            display: flex;
+            gap: 10px;
+            position: relative;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #eee;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            outline: none;
+            background-color: #f9f9f9;
+        }
+
+        .chat-input:focus {
+            border-color: #2E7D32;
+            background-color: white;
+        }
+
+        .send-btn {
+            background-color: #2E7D32;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .send-btn:hover {
+            background-color: #1B5E20;
+            transform: scale(1.05);
+        }
+
+        .suggestions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .suggestion-chip {
+            background-color: #e8f5e9;
+            color: #2E7D32;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+            border: 1px solid #c8e6c9;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .suggestion-chip:hover {
+            background-color: #2E7D32;
+            color: white;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 40px;
+            background-color: #2E7D32;
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Espace Adhérent</h1>
+    <p>Gérez vos informations et suivez vos sorties</p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="{{ url_for('accueil') }}">Accueil</a></li>
+        <li><a href="{{ url_for('liste_sorties') }}">Sorties</a></li>
+        <li><a href="{{ url_for('catalogue_especes') }}">Espèces</a></li>
+        <li><a href="{{ url_for('agent_faq') }}">Chatbot FAQ</a></li>
+
+        {% if 'id_adherent' in session %}
+            <li><a href="{{ url_for('espace_adherent') }}">Mon espace</a></li>
+            <li><a href="{{ url_for('deconnexion') }}">Déconnexion</a></li>
+        {% else %}
+            <li><a href="{{ url_for('connexion') }}">Connexion</a></li>
+            <li><a href="{{ url_for('inscription') }}">Inscription</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<main>
+    <!-- Infos adhérent de ton ancien template ici si tu en as -->
+
+    <!-- Historique des sorties -->
+    <section>
+        <h2>Historique de vos sorties</h2>
+
+        {% if historique %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Thème</th>
+                        <th>Date de rendez-vous</th>
+                        <th>Lieu de rendez-vous</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for sortie in historique %}
+                    <tr>
+                        <td>{{ sortie.theme }}</td>
+                        <td>{{ sortie.date_rdv.strftime('%d/%m/%Y %H:%M') }}</td>
+                        <td>{{ sortie.lieu_rdv }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="empty-message">Aucune sortie trouvée dans votre historique.</p>
+        {% endif %}
+    </section>
+
+    <!-- CHATBOT DANS L'ESPACE ADHERENT -->
+<section id="chatbot">
+    <h2>Assistant Nature</h2>
+
+    <div class="chat-container">
+        <!-- En-tête du chat -->
+        <div class="chat-header">
+            <div class="bot-avatar">🌿</div>
+            <div class="chat-header-info">
+                <h2>Assistant Nature</h2>
+                <p>En ligne · Répond instantanément</p>
+            </div>
+        </div>
+
+        <!-- Zone des messages -->
+        <div class="chat-messages" id="chatbox">
+            <!-- Message de bienvenue -->
+            <div class="message bot">
+                Bonjour ! Je suis l'assistant virtuel de l'association.<br>
+                Posez-moi une question sur les adhésions, les sorties ou la nature !
+                <span class="timestamp">Aujourd'hui</span>
+            </div>
+
+            {% if question %}
+                <div class="message user">
+                    {{ question }}
+                    <span class="timestamp">À l'instant</span>
+                </div>
+            {% endif %}
+
+            {% if reponse %}
+                <div class="message bot">
+                    {{ reponse|safe }}
+                    <span class="timestamp">À l'instant</span>
+                </div>
+            {% elif question %}
+                <div class="message bot">
+                    Désolé, je n'ai pas trouvé de réponse exacte dans ma base de données.
+                    Essayez de reformuler avec des mots-clés simples comme
+                    "adhésion", "tarif" ou "sortie".
+                    <span class="timestamp">À l'instant</span>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Zone de saisie -->
+        <div class="chat-input-area">
+            <form method="POST" action="{{ url_for('agent_faq') }}#chatbot" class="chat-form">
+                <input type="text" name="question" class="chat-input"
+                       placeholder="Posez votre question ici..." required autocomplete="off">
+                <button type="submit" class="send-btn" title="Envoyer">➤</button>
+            </form>
+
+            <!-- Suggestions cliquables -->
+            <div class="suggestions">
+                <a onclick="fillInput('Comment adhérer ?')" class="suggestion-chip">Comment adhérer ?</a>
+                <a onclick="fillInput('Quelles sont les sorties ?')" class="suggestion-chip">Les sorties</a>
+                <a onclick="fillInput('C\'proposez moi des sortie en KABYLIE ?')" class="suggestion-chip">prpositions des sorties</a>
+                <a onclick="fillInput('J\'ai vu un oiseau')" class="suggestion-chip">Observation</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p>© 2025 Association Nature - Tous droits réservés</p>
+</footer>
+
+<script>
+    function fillInput(text) {
+        document.querySelector('.chat-input').value = text;
+        document.querySelector('.send-btn').click();
+    }
+
+    var chatbox = document.getElementById('chatbox');
+    if (chatbox) {
+        chatbox.scrollTop = chatbox.scrollHeight;
+    }
+</script>
+
+</body>
+</html>

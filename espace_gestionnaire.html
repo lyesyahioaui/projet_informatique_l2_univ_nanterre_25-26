@@ -1,0 +1,45 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Gestionnaire</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sortie.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Espace Gestionnaire</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('inscrire_adherent') }}">Inscrire un adhérent</a></li>
+                 <li><a href="{{ url_for('creer_sortie') }}">Créer une sortie</a></li>
+                <li><a href="{{ url_for('saisir_paiement') }}">Saisir un paiement</a></li>
+                <li><a href="{{ url_for('ajouter_espece') }}">Ajouter une espèce</a></li>
+                <li><a href="{{ url_for('ajouter_nichoir') }}">Ajouter un nichoir</a></li>
+                <li><a href="{{ url_for('deconnexion') }}" class="link-item">Déconnexion</a></li>
+            </ul>
+        </nav>
+        </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Bienvenue dans l'espace gestionnaire</h2>
+        <p>Utilisez les liens ci-dessus pour gérer les différentes fonctionnalités de l'association.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Chez Nature. Tous droits réservés.</p>
+    </footer>
+</body>
+
+</html>

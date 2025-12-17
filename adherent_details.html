@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+<h1>Profil de l'Adhérent</h1>
+<div class="adherent-details">
+    <p><strong>ID :</strong> {{ adherent.id_adh }}</p>
+    <p><strong>Nom :</strong> {{ adherent.nom }} {{ adherent.prenom }}</p>
+    <p><strong>Email :</strong> {{ adherent.adr_mail }}</p>
+    <p><strong>Téléphone :</strong> {{ adherent.num_phone }}</p>
+</div>
+
+<h2>Sorties auxquelles l'adhérent est inscrit</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Thème</th>
+            <th>Date</th>
+            <th>Lieu</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sortie in sorties %}
+        <tr>
+            <td>{{ sortie.theme }}</td>
+            <td>{{ sortie.date_rdv }}</td>
+            <td>{{ sortie.lieu_rdv }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

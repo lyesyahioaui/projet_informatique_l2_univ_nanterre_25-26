@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Adhérents</title>
+    <style>
+        /* Styles de base */
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8f0;
+            color: #333;
+        }
+        
+        header {
+            background-color: #2c5d34;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        header h1 {
+            margin: 0;
+        }
+        
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        
+        h2 {
+            color: #2c5d34;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        /* Styles du tableau */
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #2c5d34;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        tr:hover {
+            background-color: #d3edd3;
+        }
+        /* Styles des boutons */
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 3px;
+            color: white;
+            background-color: #2c5d34;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #1f4426;
+        }
+        
+        .btn.delete {
+            background-color: #c0392b;
+        }
+        
+        .btn.delete:hover {
+            background-color: #922b21;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Liste des Adhérents</h1>
+    </header>
+    <div class="container">
+        <h2>Gestion des Adhérents</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Statut</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Exemple de ligne statique, à remplacer par des données dynamiques Flask -->
+                <tr>
+                    <td>1</td>
+                    <td>Dupont</td>
+                    <td>Jean</td>
+                    <td>Étudiant</td>
+                    <td>jean.dupont@example.com</td>
+                    <td>
+                        <a href="/modifier/1" class="btn">Modifier</a>
+                        <a href="/supprimer/1" class="btn delete">Supprimer</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Martin</td>
+                    <td>Claire</td>
+                    <td>Personnel</td>
+                    <td>claire.martin@example.com</td>
+                    <td>
+                        <a href="/modifier/2" class="btn">Modifier</a>
+                        <a href="/supprimer/2" class="btn delete">Supprimer</a>
+                    </td>
+                </tr>
+                <!-- Fin de l'exemple -->
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

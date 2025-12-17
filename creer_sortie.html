@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer une Sortie - Chez Nature</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sortie.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Créer une Nouvelle Sortie</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('accueil') }}">Accueil</a></li>
+                <li><a href="{{ url_for('espace_gestionnaire') }}">Retour à l'Espace Gestionnaire</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <form method="POST" action="{{ url_for('creer_sortie') }}">
+            <label for="theme">Thème :</label>
+            <input type="text" id="theme" name="theme" required>
+
+            <label for="lieu_rdv">Lieu de rendez-vous :</label>
+            <input type="text" id="lieu_rdv" name="lieu_rdv" required>
+
+            <label for="date_rdv">Date de rendez-vous :</label>
+            <input type="datetime-local" id="date_rdv" name="date_rdv" required>
+
+            <label for="dparcours">Distance du parcours :</label>
+            <textarea id="dparcours" name="dparcours" required></textarea>
+
+            <label for="effectif_max">Effectif maximum :</label>
+            <input type="number" id="effectif_max" name="effectif_max" required>
+
+            <button type="submit">Créer la sortie</button>
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Chez Nature. Tous droits réservés.</p>
+    </footer>
+</body>
+
+</html>

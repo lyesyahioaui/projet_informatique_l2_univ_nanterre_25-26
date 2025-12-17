@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de l'Espèce</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sortie.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Détails de l'Espèce : {{ espece.nom_espece }}</h1>
+    </header>
+
+    <main>
+        <!-- Informations sur l'espèce -->
+        <section class="details-espece">
+            <p><strong>Groupe :</strong> {{ espece.groupe_nom }}</p>
+            <!-- Nom du groupe -->
+            {% if espece.caracteristiques %}
+            <p><strong>Caractéristiques :</strong></p>
+            <ul>
+                {% for caract in espece.caracteristiques %}
+                <li>{{ caract }}</li>
+                <!-- Liste des caractéristiques -->
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </section>
+
+        <!-- Retour au catalogue -->
+        <footer class="back-link">
+            <a href="{{ url_for('catalogue_especes') }}">Retour au catalogue des espèces</a>
+        </footer>
+    </main>
+
+</body>
+
+</html>

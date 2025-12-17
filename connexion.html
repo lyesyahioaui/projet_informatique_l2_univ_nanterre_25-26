@@ -1,0 +1,41 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='connexion.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Connexion</h1>
+    </header>
+
+    <main>
+         <form method="POST" action="{{ url_for('connexion') }}">
+    <label for="adr_mail">Adresse e-mail :</label>
+    <input type="email" id="adr_mail" name="adr_mail" required>
+
+    <label for="mot_de_passe">Mot de passe :</label>
+    <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+
+    <button type="submit">Se connecter</button>
+        </form>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Chez Nature. Tous droits réservés.</p>
+    </footer>
+</body>
+
+</html>

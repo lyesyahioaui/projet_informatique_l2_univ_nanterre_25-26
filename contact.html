@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chez Nature - Contact</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='contact.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Contactez-nous</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('accueil') }}">Accueil</a></li>
+                <li><a href="{{ url_for('liste_sorties') }}">Sorties</a></li>
+                <li><a href="{{ url_for('catalogue_especes') }}">Espèces</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                {% if 'id_adherent' in session %}
+                <li><a href="{{ url_for('espace_adherent') }}">Espace Adhérent</a></li>
+                <li><a href="{{ url_for('deconnexion') }}">Déconnexion</a></li>
+                {% else %}
+                <li><a href="{{ url_for('inscription') }}">Inscription</a></li>
+                <li><a href="{{ url_for('connexion') }}">Connexion</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="contact-form">
+            <h2>Formulaire de Contact</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %} {% endwith %}
+            <form method="POST" action="{{ url_for('contact') }}">
+                <div>
+                    <label for="nom">Nom :</label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
+                <div>
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div>
+                    <label for="message">Message :</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit">Envoyer</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Chez Nature. Tous droits réservés.</p>
+    </footer>
+
+</body>
+
+</html>

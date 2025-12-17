@@ -1,0 +1,56 @@
+{% extends "accueil.html" %}
+
+{% block content %}
+<div class="agent-container">
+    <h1>🤖 Agent IA – Questions sur l'association</h1>
+    
+    <div class="agent-info">
+        <p><strong>Bienvenue sur l'agent IA de l'association !</strong></p>
+        <p>Pose une question en français sur :</p>
+        <ul>
+            <li>Les sorties et comment t'y inscrire</li>
+            <li>La cotisation et les paiements</li>
+            <li>Les espèces et la recherche inversée</li>
+            <li>Les nichoirs et les observations</li>
+            <li>Ton espace adhérent</li>
+            <li>L'association en général</li>
+        </ul>
+    </div>
+
+    <form method="post" class="agent-form">
+        <div class="form-group">
+            <label for="question">Pose ta question :</label>
+            <textarea 
+                id="question" 
+                name="question" 
+                rows="4"
+                placeholder="Exemple : comment m'inscrire à une sortie ? combien coûte la cotisation ?"
+                required>
+            </textarea>
+        </div>
+        
+        <button type="submit" class="btn-agent">❓ Demander à l'agent</button>
+    </form>
+
+    {% if question %}
+        <div class="user-question">
+            <p><strong>Ta question :</strong></p>
+            <p>{{ question }}</p>
+        </div>
+    {% endif %}
+
+    {% if reponse %}
+        <div class="agent-response">
+            <h2>💡 Réponse de l'agent</h2>
+            <p>{{ reponse }}</p>
+        </div>
+    {% endif %}
+
+    {% if question and not reponse %}
+        <div class="agent-error">
+            <p><strong>⚠️ Aucune réponse trouvée.</strong> Essaie de reformuler ta question ou consulte les menus du site.</p>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

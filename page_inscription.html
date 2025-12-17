@@ -1,0 +1,49 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sortie.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Inscription</h1>
+    </header>
+
+    <main>
+        <form method="POST" action="{{ url_for('inscription') }}">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required>
+
+            <label for="prenom">Prénom :</label>
+            <input type="text" id="prenom" name="prenom" required>
+
+            <label for="adr_mail">Email :</label>
+            <input type="email" id="adr_mail" name="adr_mail" required>
+
+            <label for="num_phone">Numéro de téléphone :</label>
+            <input type="text" id="num_phone" name="num_phone" required>
+
+            <label for="mot_de_passe">Mot de passe :</label>
+            <input type="password" id="mot_de_passe" name="mot_de_passe" required>
+
+            <button type="submit">S'inscrire</button>
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Chez Nature. Tous droits réservés.</p>
+    </footer>
+</body>
+
+</html>

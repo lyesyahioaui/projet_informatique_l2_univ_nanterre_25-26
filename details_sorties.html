@@ -1,0 +1,65 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de la Sortie - {{ sortie.theme }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sortie.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Détails de la Sortie</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('accueil') }}" class="link-item">Accueil</a></li>
+                <li><a href="{{ url_for('liste_sorties') }}" class="link-item">Sorties</a></li>
+                <li><a href="{{ url_for('catalogue_especes') }}" class="link-item">Espèces</a></li>
+                <li><a href="{{ url_for('contact') }}" class="link-item">Contact</a></li>
+                {% if 'id_adherent' in session %}
+                <li><a href="{{ url_for('espace_adherent') }}" class="link-item">Espace Adhérent</a></li>
+                <li><a href="{{ url_for('deconnexion') }}" class="link-item">Déconnexion</a></li>
+                {% else %}
+                <li><a href="{{ url_for('inscription') }}" class="link-item">Inscription</a></li>
+                <li><a href="{{ url_for('connexion') }}" class="link-item">Connexion</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>{{ sortie.theme }}</h2>
+            <p><strong>Date de RDV :</strong> {{ sortie.date_rdv.strftime('%d/%m/%Y %H:%M') }}</p>
+            <p><strong>Lieu de RDV :</strong> {{ sortie.lieu_rdv }}</p>
+            <p><strong>Places disponibles :</strong> {{ sortie.places_disponibles }} / {{ sortie.effectif_max }}</p>
+            <p><strong>Nombre d'inscrits :</strong> {{ sortie.nombre_inscrits }}</p>
+
+
+            {% if 'id_adherent' in session %}
+            <!-- Formulaire d'inscription si places disponibles -->
+            {% if sortie.places_disponibles > 0 %}
+            <form action="{{ url_for('inscription_sortie', id_sortie=sortie.id_sortie) }}" method="POST">
+                <button type="submit" class="btn">S'inscrire</button>
+            </form>
+            {% else %}
+            <p>Aucune place disponible pour cette sortie.</p>
+            {% endif %} {% else %}
+            <p>Vous devez être connecté pour vous inscrire.</p>
+            {% endif %}
+        </section>
+
+        <section>
+            <h3>Actions supplémentaires</h3>
+            <!-- Lien vers la liste des sorties -->
+            <a href="{{ url_for('liste_sorties') }}" class="btn">Retour à la liste des sorties</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Chez Nature. Tous droits réservés.</p>
+    </footer>
+
+</body>
+
+</html>

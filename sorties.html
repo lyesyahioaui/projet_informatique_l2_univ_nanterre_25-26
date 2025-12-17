@@ -1,0 +1,83 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chez Nature - Liste des Sorties</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sortie.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Liste des Sorties</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('accueil') }}" class="link-item">Accueil</a></li>
+                <li><a href="{{ url_for('liste_sorties') }}" class="link-item">Sorties</a></li>
+                <li><a href="{{ url_for('catalogue_especes') }}" class="link-item">Espèces</a></li>
+                <li><a href="{{ url_for('contact') }}" class="link-item">Contact</a></li>
+                {% if 'id_adherent' in session %}
+                <li><a href="{{ url_for('espace_adherent') }}" class="link-item">Espace Adhérent</a></li>
+                <li><a href="{{ url_for('deconnexion') }}" class="link-item">Déconnexion</a></li>
+                {% else %}
+                <li><a href="{{ url_for('inscription') }}" class="link-item">Inscription</a></li>
+                <li><a href="{{ url_for('connexion') }}" class="link-item">Connexion</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Filtrer les sorties</h2>
+            <form action="{{ url_for('liste_sorties') }}" method="GET">
+                <label for="theme">Thème:</label>
+                <input type="text" id="theme" name="theme" value="{{ request.args.get('theme', '') }}">
+
+                <label for="places_min">Places restantes minimum:</label>
+                <input type="number" id="places_min" name="places_min" value="{{ request.args.get('places_min', '') }}">
+
+                <label for="inscrits_min">Nombre d'inscrits minimum:</label>
+                <input type="number" id="inscrits_min" name="inscrits_min" value="{{ request.args.get('inscrits_min', '') }}">
+
+                <button type="submit">Filtrer</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Sorties à venir</h2>
+            {% if sorties %}
+<table>
+  <tr>
+    <th>Thème</th>
+    <th>Date de RDV</th>
+    <th>Lieu de RDV</th>
+    <th>Places disponibles</th>
+    <th>Actions</th>
+  </tr>
+  {% for sortie in sorties %}
+  <tr>
+    <td>{{ sortie.theme }}</td>
+    <td>{{ sortie.date_rdv }}</td>
+    <td>{{ sortie.lieu_rdv }}</td>
+    <td>{{ sortie.places_disponibles }} / {{ sortie.effectif_max }}</td>
+    <td>
+      <a href="{{ url_for('details_sortie', id_sortie=sortie.id_sortie) }}">Détails</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>Aucune sortie ne correspond à vos critères de recherche.</p>
+{% endif %}
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Chez Nature. Tous droits réservés.</p>
+    </footer>
+
+</body>
+
+</html>

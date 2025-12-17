@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une Espèce</title>
+</head>
+
+<body>
+    <header>
+        <h1>Ajouter une Nouvelle Espèce</h1>
+    </header>
+
+    <main>
+        <form method="POST" action="{{ url_for('ajouter_espece') }}">
+            <!-- Nom de l'espèce -->
+            <label for="nome">Nom de l'Espèce :</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <!-- Groupe -->
+            <label for="idge">Groupe :</label>
+            <select id="idge" name="idge" required>
+                {% for groupe in groupes %}
+                <option value="{{ groupe.idge }}">{{ groupe.nomge }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Caractéristiques -->
+            <fieldset>
+                <legend>Caractéristiques :</legend>
+                {% for caract in caracteristiques %}
+                <div>
+                    <input type="checkbox" id="caract_{{ caract.idc }}" name="caracteristiques" value="{{ caract.idc }}">
+                    <label for="caract_{{ caract.idc }}">{{ caract.caracteristique }}</label>
+                </div>
+                {% endfor %}
+            </fieldset>
+
+            <!-- Bouton d'envoi -->
+            <button type="submit">Ajouter l'Espèce</button>
+        </form>
+
+        <!-- Lien de retour -->
+        <footer>
+            <a href="{{ url_for('espace_gestionnaire') }}">Retour à l'Espace Gestionnaire</a>
+        </footer>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue des Espèces</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sortie.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Catalogue des Espèces</h1>
+    </header>
+
+    <main>
+        <!-- Formulaire de recherche inversée -->
+        <section>
+            <h2>Recherche Inversée</h2>
+            <form method="POST" action="{{ url_for('catalogue_especes') }}">
+                <label for="caracteristiques">Rechercher une espèce par caractéristique :</label>
+                <input type="text" id="caracteristiques" name="caracteristiques" placeholder="Exemple : Chant mélodieux">
+                <button type="submit">Rechercher</button>
+            </form>
+        </section>
+
+        <!-- Liste des espèces -->
+        <section>
+            <h2>Liste des Espèces</h2>
+            {% if especes %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Nom de l'Espèce</th>
+                        <th>Groupe</th>
+                        <th>Détails</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for espece in especes %}
+                    <tr>
+                        <td>{{ espece.nom_espece }}</td>
+                        <td>{{ espece.groupe_nom }}</td>
+                        <td><a href="{{ url_for('details_espece', id_espece=espece.id_especes) }}">Voir Détails</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>Aucune espèce trouvée.</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <a href="{{ url_for('accueil') }}">Retour à l'accueil</a>
+    </footer>
+</body>
+
+</html>

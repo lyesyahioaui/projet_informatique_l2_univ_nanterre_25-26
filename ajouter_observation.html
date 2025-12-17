@@ -1,0 +1,49 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une Observation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sortie.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Ajouter une Observation</h1>
+    </header>
+
+    <main>
+        <form method="POST" action="{{ url_for('ajouter_observation') }}">
+            <label for="id_especes">ID Espèce :</label>
+            <input type="number" id="id_especes" name="id_especes" required>
+
+            <label for="idn">ID Nichoir :</label>
+            <input type="number" id="idn" name="idn" required>
+
+            <label for="nbr_oeuf">Nombre d'Oeufs :</label>
+            <input type="number" id="nbr_oeuf" name="nbr_oeuf" required>
+
+            <label for="type_occ">Type d'Occupation :</label>
+            <input type="text" id="type_occ" name="type_occ" required>
+
+            <label for="periode_nid">Période de Nidification :</label>
+            <input type="text" id="periode_nid" name="periode_nid" required>
+
+            <button type="submit">Ajouter l'Observation</button>
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Chez Nature. Tous droits réservés.</p>
+    </footer>
+</body>
+
+</html>
