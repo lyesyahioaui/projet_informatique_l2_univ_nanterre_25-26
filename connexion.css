@@ -1,0 +1,147 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F3E5D8;
+    color: #333;
+}
+
+header {
+    background-image: url('connexion.jpg');
+    /* Remplacez par une image appropriée pour la page de connexion */
+    background-size: cover;
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #2E7D32;
+    /* Couleur de fond de secours */
+}
+
+header h1 {
+    font-size: 48px;
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+main {
+    padding: 40px 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.connexion-form h2 {
+    color: #2E7D32;
+    /* Couleur du titre */
+    text-align: center;
+    /* Centrer le titre */
+}
+
+form {
+    display: flex;
+    /* Utiliser Flexbox pour l'alignement */
+    flex-direction: column;
+    /* Aligner les éléments en colonne */
+}
+
+form div {
+    margin-bottom: 20px;
+    /* Espacement entre les champs */
+}
+
+label {
+    display: block;
+    /* Afficher le label en bloc */
+    margin-bottom: 5px;
+    /* Espacement sous le label */
+    color: #2E7D32;
+    /* Couleur du texte du label */
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    /* Largeur complète */
+    padding: 10px;
+    /* Espacement interne */
+    border: 1px solid #ccc;
+    /* Bordure grise */
+    border-radius: 5px;
+    /* Coins arrondis */
+    font-size: 16px;
+    /* Taille de police */
+}
+
+button[type="submit"] {
+    display: block;
+    /* Afficher le bouton en bloc */
+    margin: 20px auto 0;
+    /* Marges automatiques pour centrer le bouton */
+    padding: 15px 30px;
+    /* Espacement interne du bouton */
+    background-color: #2E7D32;
+    /* Couleur de fond du bouton */
+    color: white;
+    /* Couleur du texte du bouton */
+    border: none;
+    /* Pas de bordure */
+    border-radius: 5px;
+    /* Coins arrondis du bouton */
+    cursor: pointer;
+    /* Curseur en forme de main au survol */
+    font-size: 18px;
+    /* Taille de police du bouton */
+}
+
+button[type="submit"]:hover {
+    background-color: #1B5E20;
+    /* Couleur au survol du bouton */
+}
+
+.flashes {
+    list-style: none;
+    /* Pas de style de liste pour les messages flash */
+    padding: 0;
+}
+
+.flashes li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.flashes li.success {
+    background-color: #DFF0D8;
+    color: #3C763D;
+}
+
+.flashes li.danger {
+    background-color: #F2DEDE;
+    color: #A94442;
+}
+
+footer {
+    text-align: center;
+    padding: 20 px;
+    background-color: #2E7D32;
+    color: white;
+}

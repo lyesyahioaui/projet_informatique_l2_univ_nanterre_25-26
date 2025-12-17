@@ -1,0 +1,138 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F3E5D8;
+    /* Couleur de fond */
+    color: #333;
+    /* Couleur du texte */
+}
+
+header {
+    background-color: #2E7D32;
+    /* Couleur de fond de l'en-tête */
+    color: white;
+    /* Couleur du texte de l'en-tête */
+    text-align: center;
+    padding: 60px 20px;
+}
+
+header h1 {
+    font-size: 48px;
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    /* Pas de puces pour la liste */
+    padding: 0;
+    display: flex;
+    /* Affichage en ligne */
+    justify-content: center;
+    /* Centrer les éléments */
+    margin-top: 20px;
+}
+
+nav ul li {
+    margin-right: 20px;
+    /* Espacement entre les éléments */
+}
+
+nav ul li a {
+    color: white;
+    /* Couleur des liens */
+    text-decoration: none;
+    /* Pas de soulignement */
+}
+
+main {
+    padding: 40px 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    /* Largeur maximale du contenu principal */
+    background-color: white;
+    /* Couleur de fond du contenu principal */
+    border-radius: 10px;
+    /* Coins arrondis */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Ombre légère */
+}
+
+h2 {
+    color: #2E7D32;
+    /* Couleur des sous-titres */
+}
+
+form {
+    margin-bottom: 20px;
+    /* Espacement sous le formulaire */
+}
+
+form label {
+    display: block;
+    /* Affichage en bloc pour les labels */
+    margin-bottom: 5px;
+    /* Espacement sous les labels */
+}
+
+form input[type="text"],
+form input[type="date"],
+form input[type="number"] {
+    width: calc(100% - 22px);
+    /* Largeur complète moins les marges */
+    padding: 10px;
+    /* Espacement interne */
+    border: 1px solid #ccc;
+    /* Bordure grise */
+    border-radius: 5px;
+    /* Coins arrondis */
+}
+
+button[type="submit"] {
+    background-color: #2E7D32;
+    /* Couleur de fond du bouton */
+    color: white;
+    /* Couleur du texte du bouton */
+    border: none;
+    /* Pas de bordure */
+    border-radius: 5px;
+    /* Coins arrondis du bouton */
+    padding: 10px 15px;
+    /* Espacement interne du bouton */
+    cursor: pointer;
+    /* Curseur en forme de main au survol */
+}
+
+button[type="submit"]:hover {
+    background-color: #1B5E20;
+    /* Couleur au survol du bouton */
+}
+
+table {
+    width: 100%;
+    /* Largeur complète pour la table */
+    border-collapse: collapse;
+    /* Fusionner les bordures des cellules */
+}
+
+table th,
+table td {
+    padding: 10px;
+    /* Espacement interne des cellules */
+    text-align: left;
+    /* Alignement à gauche du texte dans les cellules */
+}
+
+table th {
+    background-color: #2E7D32;
+    /* Couleur de fond des en-têtes de colonne */
+    color: white;
+    /* Couleur du texte des en-têtes de colonne */
+}
+
+footer {
+    text-align: center;
+    padding: 20 px;
+    background-color: #2E7D32;
+    color: white;
+}

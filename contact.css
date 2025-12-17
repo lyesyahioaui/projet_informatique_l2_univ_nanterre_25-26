@@ -1,0 +1,129 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F3E5D8;
+    color: #333;
+}
+
+header {
+    background-image: url('contact.jpg');
+    /* Remplacez par une image appropriée pour la page de contact */
+    background-size: cover;
+    color: white;
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #2E7D32;
+}
+
+header h1 {
+    font-size: 48px;
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+main {
+    padding: 40px 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h2 {
+    color: #2E7D32;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form div {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #2E7D32;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+button[type="submit"] {
+    display: block;
+    margin: 20px auto 0;
+    padding: 15px 30px;
+    background-color: #2E7D32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+button[type="submit"]:hover {
+    background-color: #1B5E20;
+}
+
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.flashes li {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.flashes li.success {
+    background-color: #DFF0D8;
+    color: #3C763D;
+}
+
+.flashes li.danger {
+    background-color: #F2DEDE;
+    color: #A94442;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #2E7D32;
+    color: white;
+}
