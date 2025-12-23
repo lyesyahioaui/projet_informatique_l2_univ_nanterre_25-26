@@ -1,0 +1,97 @@
+{% extends "accueil.html" %}
+
+{% block content %}
+<div class="agent-container">
+    <h1>🌲 Agent de suggestion de sorties</h1>
+    
+    <div class="agent-info">
+        <p><strong>Dis-nous tes préférences et nous te proposerons les meilleures sorties !</strong></p>
+    </div>
+
+    <form method="post" class="agent-form">
+        
+        <div class="form-group">
+            <label for="theme_pref">Thème préféré :</label>
+            <input 
+                type="text" 
+                id="theme_pref" 
+                name="theme_pref"
+                placeholder="Exemples : oiseaux, forêt, nichoirs, famille, botaniques...">
+        </div>
+
+        <div class="form-group">
+            <label>Distance :</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="distance_pref" value="courte"> 
+                    <strong>Courte</strong> (≤ 5 km)
+                </label>
+                <label>
+                    <input type="radio" name="distance_pref" value="longue"> 
+                    <strong>Longue</strong> (> 5 km)
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Quand veux-tu partir ?</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="dispo_pref" value="proche"> 
+                    <strong>Bientôt</strong> (dans le mois)
+                </label>
+                <label>
+                    <input type="radio" name="dispo_pref" value="plus_tard"> 
+                    <strong>Plus tard</strong> (après un mois)
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-agent">🔍 Demander une suggestion</button>
+    </form>
+
+    {% if message_agent %}
+        <div class="agent-message">
+            <p><strong>{{ message_agent }}</strong></p>
+        </div>
+    {% endif %}
+
+    {% if suggestions %}
+        <h2 class="suggestions-title">📋 Sorties suggérées pour toi</h2>
+        
+        <table class="sorties-table">
+            <thead>
+                <tr>
+                    <th>Thème</th>
+                    <th>Date & Heure</th>
+                    <th>Lieu de RDV</th>
+                    <th>Distance (km)</th>
+                    <th>Places disponibles</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in suggestions %}
+                    <tr>
+                        <td><strong>{{ s.theme }}</strong></td>
+                        <td>{{ s.date_rdv.strftime('%d/%m/%Y à %H:%M') }}</td>
+                        <td>{{ s.lieu_rdv }}</td>
+                        <td class="text-center"><strong>{{ s.dparcours }} km</strong></td>
+                        <td class="text-center">
+                            {% if s.places_disponibles > 0 %}
+                                <span class="places-available">{{ s.places_disponibles }} 🟢</span>
+                            {% else %}
+                                <span class="places-full">Complet ❌</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="agent-hint">
+            <p>Pour t'inscrire à une sortie, clique sur <strong>"Sorties"</strong> dans le menu ! 🎉</p>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

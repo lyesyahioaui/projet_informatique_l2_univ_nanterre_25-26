@@ -52,5 +52,12 @@
         </div>
     {% endif %}
 </div>
+<script>
+    function fillSuggestion(text) {
+        const textarea = document.getElementById('question');
+        textarea.value = text;
+        textarea.focus();
+    }
+</script>
 
 {% endblock %}

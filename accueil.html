@@ -490,12 +490,15 @@
             </form>
 
             <!-- Suggestions cliquables -->
-            <div class="suggestions">
-                <a onclick="fillInput('Comment adhérer ?')" class="suggestion-chip">Comment adhérer ?</a>
-                <a onclick="fillInput('Quelles sont les sorties ?')" class="suggestion-chip">Les sorties</a>
-                <a onclick="fillInput('C\'proposez moi des sortie en KABYLIE ?')" class="suggestion-chip">propositions des sorties</a>
-                <a onclick="fillInput('J\'ai vu un oiseau')" class="suggestion-chip">Observation</a>
-            </div>
+           <!-- Suggestions cliquables -->
+         <!-- Suggestions cliquables -->
+<div class="suggestions">
+    <a onclick="fillSuggestion('Comment adhérer à l\'association ?')" class="suggestion-chip">Comment adhérer ?</a>
+    <a onclick="fillSuggestion('Quels sont les types de sorties que vous proposez ?')" class="suggestion-chip">Types de sorties</a>
+    <a onclick="fillSuggestion('Quelles sont les espèces proposées par l\'association ?')" class="suggestion-chip">Espèces proposées</a>
+</div>
+
+
         </div>
     </div>
 </section>
@@ -508,16 +511,18 @@
     </footer>
 
     <script>
-        function fillInput(text) {
-            document.querySelector('.chat-input').value = text;
-            document.querySelector('.send-btn').click(); // Envoi auto (optionnel)
-        }
+    function fillSuggestion(text) {
+        const textarea = document.querySelector('.chat-input');
+        textarea.value = text;
+        // Ne pas cliquer automatiquement, juste remplir le champ
+    }
 
-        // Scroll en bas au chargement
-        var chatbox = document.getElementById('chatbox');
-        if (chatbox) {
-            chatbox.scrollTop = chatbox.scrollHeight;
-        }
-    </script>
+    // Scroll en bas au chargement
+    var chatbox = document.getElementById('chatbox');
+    if (chatbox) {
+        chatbox.scrollTop = chatbox.scrollHeight;
+    }
+</script>
+
 </body>
 </html>

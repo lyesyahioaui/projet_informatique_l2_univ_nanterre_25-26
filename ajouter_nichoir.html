@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un Nichoir</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sortie.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Ajouter un Nouveau Nichoir</h1>
+    </header>
+
+    <main>
+        <form method="POST" action="{{ url_for('ajouter_nichoir') }}">
+            <!-- Date d'installation -->
+            <label for="date_inst">Date d'installation :</label>
+            <input type="date" id="date_inst" name="date_inst" required>
+
+            <!-- Lieu d'installation -->
+            <label for="lieu_inst">Lieu d'installation :</label>
+            <input type="text" id="lieu_inst" name="lieu_inst" required placeholder="Exemple : Jardin de l’école">
+
+            <!-- Informations sur l'observation -->
+            <fieldset>
+                <legend>Observations :</legend>
+
+                <label for="nbr_oeuf">Nombre d'œufs :</label>
+                <input type="number" id="nbr_oeuf" name="nbr_oeuf" min="0">
+
+                <label for="type_occ">Type d'occupation :</label>
+                <input type="text" id="type_occ" name="type_occ" placeholder="Exemple : Nidification">
+
+                <label for="periode_nid">Période de nidification :</label>
+                <input type="text" id="periode_nid" name="periode_nid" placeholder="Exemple : Mars - Avril">
+            </fieldset>
+
+            <!-- Bouton d'envoi -->
+            <button type="submit">Ajouter le Nichoir</button>
+        </form>
+
+        <!-- Lien de retour -->
+        <footer>
+            <a href="{{ url_for('espace_gestionnaire') }}">Retour à l'Espace Gestionnaire</a>
+        </footer>
+    </main>
+</body>
+
+</html>
