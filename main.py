@@ -87,45 +87,83 @@ FAQ_REPONSES = [
     "Pour vous inscrire à une sortie, allez dans « Sorties », choisissez une sortie et cliquez sur le bouton d'inscription correspondant.",
     "Pour participer à une sortie, consultez la liste des sorties puis utilisez le bouton d'inscription de la sortie qui vous intéresse.",
     ]
+import re
+
+def normaliser(texte: str) -> str:
+    texte = texte.lower()
+    texte = re.sub(r"[^\w\s]", " ", texte)  # enlever la ponctuation
+    texte = re.sub(r"\s+", " ", texte).strip()
+    return texte
+
 
 def repondre_gemini(question: str) -> str:
-    """Répond avec FAQ d'abord, puis Mistral pour la nature"""
+    """Répond avec FAQ d'abord, puis Mistral pour nature + association"""
     try:
-        # 1️⃣ CHERCHE DANS LA FAQ
-        vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(2, 3)).fit([question] + FAQ_QUESTIONS)
-        question_vec = vectorizer.transform([question])
-        faq_vecs = vectorizer.transform(FAQ_QUESTIONS)
+        # 1️⃣ NORMALISATION
+        q_norm = normaliser(question)
+        faq_norm = [normaliser(q) for q in FAQ_QUESTIONS]
+
+        # 2️⃣ CHERCHE DANS LA FAQ
+        vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(2, 3)).fit([q_norm] + faq_norm)
+        question_vec = vectorizer.transform([q_norm])
+        faq_vecs = vectorizer.transform(faq_norm)
         similarities = cosine_similarity(question_vec, faq_vecs)[0]
         best_match_idx = similarities.argmax()
         best_similarity = similarities[best_match_idx]
-        
-        if best_similarity > 0.4:
+
+        # seuil un peu plus bas pour matcher plus facilement
+        if best_similarity > 0.3:
             return FAQ_REPONSES[best_match_idx]
-        
-        # 2️⃣ SINON MISTRAL
+
+        # 3️⃣ SINON MISTRAL, avec domaine élargi
         message = client.chat.complete(
             model="mistral-small-latest",
             messages=[
                 {
                     "role": "user",
-                    "content": f"""Tu es expert en nature et environnement pour l'association Nature et Environnement.
-Réponds SEULEMENT sur :
+                    "content": f"""Tu es l'assistant de l'association Nature et Environnement.
+
+Tu peux répondre sur :
 - Nature et environnement
 - Espèces animales et végétales
-- Sorties nature
+- Sorties nature et activités de l'association
 - Protection de l'environnement
 - Écosystèmes
+- Adhésion et fonctionnement de l'association (inscription, compte adhérent, sorties, observations)
+- Zoo
+- Paysages naturels (montagnes, forêts, mers, déserts, lacs, rivières...)
+- La Faune 
+- La Flore
+
+On te fournit parfois un texte appelé "Contexte base de données de l'association"
+qui contient la liste des sorties (thème, lieu, date) et la liste des espèces du site.
+
+Quand la question parle de sorties (proposer une sortie, type de sortie, voir un animal, où aller, etc.),
+utilise EN PRIORITÉ ce contexte pour :
+- dire s'il existe une sortie qui correspond,
+- ou proposer un type de sortie parmi celles de la base (par thème ou lieu).
+
+Quand la question parle d'espèces, utilise EN PRIORITÉ la liste d'espèces donnée dans le contexte.
+
+Ne réponds pas sur des sujets qui n'ont vraiment aucun rapport avec ces thèmes
+(ex : jeux vidéo, politique, vie privée de personnes, etc.).
+
+
+
+
 
 Question : {question}
 
-Si ce n'est pas sur la nature, dis : "Je peux seulement répondre sur la nature et l'environnement."
-Réponse courte (max 300 caractères) :"""
+Si la question n'a aucun lien avec ces thèmes, répond : "Je peux seulement répondre sur la nature, l'environnement et le fonctionnement de l'association."
+
+Réponse courte (max 300 caractères) :
+"""
                 }
             ]
         )
-        
+
         return message.choices[0].message.content
-    
+
     except Exception as e:
         return f"Erreur : {str(e)}"
 
@@ -721,6 +759,54 @@ def deconnexion():
     flash('Vous êtes déconnecté.', 'info')
     return redirect(url_for('accueil'))
 
+def reponse_especes_depuis_bdd(especes, max_especes=10, max_car=450):
+    """
+    Construit une réponse courte listant quelques espèces de l'association.
+    especes : rows avec (nom_espece, groupe_nom)
+    """
+    especes = list(especes[:max_especes])
+    if not especes:
+        return "Aucune espèce n'est actuellement enregistrée dans la base de données."
+
+    lignes = []
+    for e in especes:
+        lignes.append(f"- {e.nom_espece} ({e.groupe_nom})")
+        texte_temp = " ".join(lignes)
+        if len(texte_temp) > max_car:
+            lignes.pop()
+            break
+
+    return (
+        "Voici quelques espèces répertoriées par l'association :\n"
+        + "\n".join(lignes)
+        + "\nTu peux voir la liste complète dans la page « Espèces » du site."
+    )
+
+
+def reponse_sorties_depuis_bdd(sorties, max_sorties=10, max_car=450):
+    """
+    Construit une réponse courte listant quelques sorties de l'association.
+    sorties : rows avec (theme, lieu_rdv, date_rdv)
+    """
+    sorties = list(sorties[:max_sorties])
+    if not sorties:
+        return "Aucune sortie n'est actuellement enregistrée dans la base de données."
+
+    lignes = []
+    for s in sorties:
+        lignes.append(f"- {s.theme} à {s.lieu_rdv} le {s.date_rdv.strftime('%d/%m/%Y')}")
+        texte_temp = " ".join(lignes)
+        if len(texte_temp) > max_car:
+            lignes.pop()
+            break
+
+    return (
+        "Voici quelques sorties actuellement proposées par l'association :\n"
+        + "\n".join(lignes)
+        + "\nConsulte la page « Sorties » du site pour plus de détails ou t'inscrire."
+    )
+
+
 @app.route('/agent_faq', methods=['GET', 'POST'])
 def agent_faq():
     if 'id_adherent' not in session:
@@ -731,13 +817,72 @@ def agent_faq():
     reponse = None
 
     if request.method == 'POST':
-        question = request.form.get('question')
-        if question:
-            reponse = repondre_gemini(question)  # ← Utilise Gemini maintenant
+        question = request.form.get('question', '').strip()
 
-    return render_template('agent_faq.html',
-                           question=question,
-                           reponse=reponse)
+        # mémoire courte
+        if len(question.split()) <= 3 and 'derniere_question' in session:
+            question_base = session['derniere_question'] + " " + question
+        else:
+            question_base = question
+
+        q_lower = question_base.lower()
+
+        # 1️⃣ Cas spécial : demande de sorties proposées
+        if (
+            ("quelles" in q_lower or "quels" in q_lower or "liste" in q_lower)
+            and "sorties" in q_lower
+        ) or (
+            "sorties" in q_lower and "proposez" in q_lower
+        ) or (
+            "sorties" in q_lower and "propose" in q_lower
+        ):
+            with db.connect_to_db() as conn:
+                with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
+                    cur.execute("""
+                        SELECT theme, lieu_rdv, date_rdv
+                        FROM sortie
+                        ORDER BY date_rdv ASC
+                        LIMIT 20
+                    """)
+                    sorties = cur.fetchall()
+
+            reponse = reponse_sorties_depuis_bdd(sorties)
+
+        # 2️⃣ Cas spécial : demande des espèces proposées
+        elif (
+            ("quelles" in q_lower or "quels" in q_lower or "liste" in q_lower)
+            and ("espèces" in q_lower or "especes" in q_lower)
+        ) or (
+            ("espèces" in q_lower or "especes" in q_lower) and "propose" in q_lower
+        ):
+            with db.connect_to_db() as conn:
+                with conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor) as cur:
+                    cur.execute("""
+                        SELECT e.nom AS nom_espece, g.nomge AS groupe_nom
+                        FROM especes e
+                        JOIN groupe_espece g ON e.idge = g.idge
+                        ORDER BY e.nom
+                        LIMIT 30
+                    """)
+                    especes = cur.fetchall()
+
+            reponse = reponse_especes_depuis_bdd(especes)
+
+        else:
+            # 3️⃣ Tous les autres cas : FAQ + Mistral
+            question_complete = question_base
+            if question_complete:
+                reponse = repondre_gemini(question_complete)
+
+        # Mémoriser la question si elle est assez détaillée
+        if len(question.split()) >= 3:
+            session['derniere_question'] = question
+
+    return render_template(
+        'agent_faq.html',
+        question=question,
+        reponse=reponse
+    )
 
 
 @app.route('/agent_sortie', methods=['GET', 'POST'])
