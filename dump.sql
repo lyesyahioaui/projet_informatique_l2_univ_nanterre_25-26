@@ -26,12 +26,6 @@ CREATE TABLE sortie (
     effectif_max INTEGER CHECK (effectif_max > 0)
 );
 
-CREATE TABLE animateur (
-    id_animateur SERIAL PRIMARY KEY,
-    nom VARCHAR(50) NOT NULL,
-    num_phone VARCHAR(20) UNIQUE NOT NULL
-);
-
 CREATE TABLE adherent (
     id_adh SERIAL PRIMARY KEY,
     nom VARCHAR(50) NOT NULL,
@@ -279,9 +273,16 @@ INSERT INTO adherent (id_adh, nom, prenom, adr_mail, num_phone, mot_de_passe, es
 (13,'Lambert','Juliette','juliette.lambert@gmail.com','+33 6 20 21 22','lambertjuliette22', 'False'),
 (14,'Dumas','Julien','julien.dumas@gmail.com','+33 6 23 24 25','dumasjulien25', 'False'),
 (15,'Carpentier','Claire','claire.carpentier@gmail.com','+33 6 26 27 28','carpentierclaire28','false');
+(16, 'François', 'Delbot', 'francois.delbot@gmail.com', '0721346789', 'françoisdelbot', 'true'),
+(17, 'HAMMA', 'Redouane', 'redouane.hamma@gmail.com', '0619987859', 'hammaredouane', 'false'),
+(19, 'YAHIAOUI', 'LYES', 'lyesyahiaoui1007@gmail.com', '0619987858', 'lyesyahiaoui', 'true'),
+(21, 'khoulef', 'achour', 'khoulef.achour@gmail.com', '0670399666', 'khoulefachour', 'false');
+
 
 INSERT INTO gestionnaire (id_admin) VALUES 
-(8);
+(17);
+INSERT INTO gestionnaire (id_admin) VALUES 
+(19);
 
 ---Filling table sortie :
 INSERT INTO sortie (id_sortie, theme, lieu_rdv, date_rdv, dparcours, effectif_max) VALUES
@@ -300,6 +301,8 @@ INSERT INTO sortie (id_sortie, theme, lieu_rdv, date_rdv, dparcours, effectif_ma
 (13, 'Sortie d\''observation à l\''aube', 'Réserve Ornithologique du Teich', '2024-08-20 06:30:00', 5, 20),
 (14, 'Randonnée et observation des migrateurs', 'Montagne Sainte-Victoire', '2024-09-05 07:30:00', 7, 18),
 (15, 'Sortie en kayak pour observer les oiseaux aquatiques', 'Rivière Dordogne', '2024-10-10 11:00:00', 6, 15);
+(16, 'Randonnée sauvage', 'montagne Djurdjura en Kabylie', '2026-12-17 18:30:00', 180.0, 150),
+(17, 'randonnée nanterienne', 'ufr segmi', '2026-01-10 23:59:00', 99.0, 99999);
 
 ---Filling table nichoir :
 INSERT INTO nichoir (idn,date_inst,lieu_inst) VALUES
