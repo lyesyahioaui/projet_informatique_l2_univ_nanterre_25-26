@@ -26,6 +26,12 @@ CREATE TABLE sortie (
     effectif_max INTEGER CHECK (effectif_max > 0)
 );
 
+CREATE TABLE animateur (
+    id_animateur SERIAL PRIMARY KEY,
+    nom VARCHAR(50) NOT NULL,
+    num_phone VARCHAR(20) UNIQUE NOT NULL
+);
+
 CREATE TABLE adherent (
     id_adh SERIAL PRIMARY KEY,
     nom VARCHAR(50) NOT NULL,
